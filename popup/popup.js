@@ -115,6 +115,9 @@ function copyApplications(){
 }
 
 function clearApplications() {
+    if (!confirm("Are you sure you want to clear all applications?")) {
+        return;
+    }
     chrome.storage.local.set({ applications: [] });
     while (appUl.firstChild) {
         appUl.removeChild(appUl.firstChild);
