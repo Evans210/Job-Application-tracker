@@ -9,21 +9,25 @@ const clearBtn = document.getElementById('clear-btn');
 
 loadApplications();
 dateElement.value = new Date().toISOString().split('T')[0];
+restoreDraft();
+
+[positionElement, companyElement, dateElement, appStatusElement].forEach(el =>
+    el.addEventListener('input', saveDraft)
+);
 
 appForm.addEventListener('submit', (event) =>{
     event.preventDefault();
-
     const formData = {
         position: positionElement.value,
         company: companyElement.value,
         date: dateElement.value,
         appStatus: appStatusElement.value
-    }
-
+    };
     saveApplication(formData);
     addToPopup(formData);
     appForm.reset();
     dateElement.value = new Date().toISOString().split('T')[0];
+    chrome.storage.local.remove('formDraft');
 });
 
 copyBtn.addEventListener('click', () => {
@@ -33,6 +37,26 @@ copyBtn.addEventListener('click', () => {
 clearBtn.addEventListener('click', () => {
     clearApplications();
 });
+
+function restoreDraft() {
+    chrome.storage.local.get({ formDraft: {} }, (result) => {
+        const draft = result.formDraft;
+        if (draft.position) positionElement.value = draft.position;
+        if (draft.company) companyElement.value = draft.company;
+        if (draft.date) dateElement.value = draft.date;
+        if (draft.appStatus) appStatusElement.value = draft.appStatus;
+    });
+}
+
+function saveDraft() {
+    const draft = {
+        position: positionElement.value,
+        company: companyElement.value,
+        date: dateElement.value,
+        appStatus: appStatusElement.value
+    };
+    chrome.storage.local.set({ formDraft: draft });
+}
 
 function loadApplications() {
     chrome.storage.local.get({applications: []}, (result) => {
@@ -79,7 +103,7 @@ function appToString(app) {
 function copyApplications(){
     chrome.storage.local.get({applications: []}, (result) => {
         const applications = result.applications;
-        let clipboardTxt = 'JOB APPLICATION REPORT\n\n';
+        let clipboardTxt = 'JOB APPLICATION REPORT:\n';
 
         applications.forEach(app => {
             clipboardTxt += appToString(app) + "\n";
