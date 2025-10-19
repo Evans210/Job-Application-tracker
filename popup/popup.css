@@ -1,0 +1,94 @@
+* { box-sizing: border-box; }
+body { 
+    width: 350px; 
+    min-height: 400px; 
+    font-family: 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+    margin: 10px; 
+}
+h1 { 
+    font-size: 18px; 
+    margin: 0 0 8px; 
+    text-decoration:underline;
+}
+h2 { 
+    font-size: 16px; 
+    margin: 8px 0 5px; 
+    text-decoration:underline;
+}
+form { display: grid; gap: 8px; }
+label { display: grid; gap: 5px; font-size: 12px; }
+input, select { 
+    padding: 8px; 
+    border: 1px solid #2557a7; 
+    border-radius: 5px; 
+    font-size: 12px; 
+    box-shadow: 0 2px 4px rgba(45,45,45,0.18);
+    font-family: inherit;
+}
+#submit { 
+    padding: 10px;
+    margin-top: 8px;
+    border: 0px;
+    border-radius: 6px; 
+    background: #2557a7; 
+    color: #fff; 
+    font-size: 14px;
+    font-weight: 600; 
+    cursor: pointer; 
+}
+#submit:hover { background: #164081;}
+#actions {
+    margin-top: 4px;
+    display: flex;
+    justify-content: flex-end;
+}
+#export-btn {
+    background-color: #fff;
+    margin-right: 2px;
+    border: 0px;
+    font-size: 14px;
+}
+#export-btn:hover{
+    text-decoration:underline;
+}
+#clear-btn {
+    background-color: #fff;
+    border: 0px;
+    font-size: 14px;
+}
+#clear-btn:hover{
+    text-decoration:underline;
+}
+#saved {
+    display: grid; 
+}
+ul { 
+    display: grid; 
+    gap: 2px; 
+    max-height: 260px; 
+    overflow: auto; 
+    font-size: 12px;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px 5px;
+}
+li { 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    text-align: left;
+}
+.delete {
+    background-color: #fff;
+    border: 0px;
+    font-size: 14px;
+}
+.delete:hover{
+    text-decoration:underline;
+}
+#no-app {
+    text-align: center; 
+    color: grey; 
+    font-style: italic;
+}
