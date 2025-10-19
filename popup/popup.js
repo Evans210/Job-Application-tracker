@@ -4,10 +4,11 @@ const dateElement = document.getElementById('date');
 const appStatusElement = document.getElementById('status');
 const appForm = document.getElementById('app-form');
 const appUl = document.getElementById('app-ul');
-const exportBtn = document.getElementById('export-btn');
+const copyBtn = document.getElementById('copy-btn');
 const clearBtn = document.getElementById('clear-btn');
 
 loadApplications();
+dateElement.value = new Date().toISOString().split('T')[0];
 
 appForm.addEventListener('submit', (event) =>{
     event.preventDefault();
@@ -21,6 +22,16 @@ appForm.addEventListener('submit', (event) =>{
 
     saveApplication(formData);
     addToPopup(formData);
+    appForm.reset();
+    dateElement.value = new Date().toISOString().split('T')[0];
+});
+
+copyBtn.addEventListener('click', () => {
+    copyApplications();
+});
+
+clearBtn.addEventListener('click', () => {
+    clearApplications();
 });
 
 function loadApplications() {
@@ -63,4 +74,25 @@ function deleteApplication(event) {
 
 function appToString(app) {
     return `${app.position} - ${app.company} - ${app.date} - ${app.appStatus}`;
+}
+
+function copyApplications(){
+    chrome.storage.local.get({applications: []}, (result) => {
+        const applications = result.applications;
+        let clipboardTxt = 'JOB APPLICATION REPORT\n\n';
+
+        applications.forEach(app => {
+            clipboardTxt += appToString(app) + "\n";
+        });
+
+        navigator.clipboard.writeText(clipboardTxt);
+        alert("Copied to clipboard!");
+    });
+}
+
+function clearApplications() {
+    chrome.storage.local.set({ applications: [] });
+    while (appUl.firstChild) {
+        appUl.removeChild(appUl.firstChild);
+    }
 }

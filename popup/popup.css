@@ -42,13 +42,13 @@ input, select {
     display: flex;
     justify-content: flex-end;
 }
-#export-btn {
+#copy-btn {
     background-color: #fff;
     margin-right: 2px;
     border: 0px;
     font-size: 14px;
 }
-#export-btn:hover{
+#copy-btn:hover{
     text-decoration:underline;
 }
 #clear-btn {
