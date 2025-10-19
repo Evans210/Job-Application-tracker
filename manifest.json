@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Job Application Tracker",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "An extention to track job applications by Evans Bonté",
     "permissions": ["storage"],
     "icons": {
@@ -12,9 +12,5 @@
     },
     "action": {
       "default_popup": "popup/popup.html"
-    },
-    "background": {
-      "service_worker": "background.js",
-      "type": "module"
     }
   }
