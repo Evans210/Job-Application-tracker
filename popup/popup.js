@@ -115,10 +115,10 @@ function appToString(app) {
 
 function copyApplications(){
     chrome.storage.local.get({applications: []}, (result) => {
-        const applications = result.applications;
+        const sortedApps = sortApplications(result.applications);
         let clipboardTxt = 'JOB APPLICATION REPORT:\n';
 
-        applications.forEach(app => {
+        sortedApps.forEach(app => {
             clipboardTxt += appToString(app) + "\n";
         });
 
