@@ -58,9 +58,14 @@ function saveDraft() {
     chrome.storage.local.set({ formDraft: draft });
 }
 
+function sortApplications(applications) {
+    return applications.sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
 function loadApplications() {
     chrome.storage.local.get({applications: []}, (result) => {
-        result.applications.forEach(addToPopup);
+        const sortedApps = sortApplications(result.applications);
+        sortedApps.forEach(addToPopup);
     });
 }   
 
@@ -96,8 +101,16 @@ function deleteApplication(event) {
     });
 }
 
+function formatDate(dateStr) {  
+    const date = new Date(dateStr);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`; // dd/mm/yyyy
+}
+
 function appToString(app) {
-    return `${app.position} - ${app.company} - ${app.date} - ${app.appStatus}`;
+    return `${app.position} - ${app.company} - ${formatDate(app.date)} - ${app.appStatus}`;
 }
 
 function copyApplications(){
